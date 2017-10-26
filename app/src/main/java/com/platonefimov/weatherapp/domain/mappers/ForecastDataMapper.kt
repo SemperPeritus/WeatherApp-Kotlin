@@ -11,7 +11,8 @@ import com.platonefimov.weatherapp.domain.model.Forecast as ModelForecast
 class ForecastDataMapper {
 
     fun convertFromDataModel(forecast: ForecastResult): ForecastList {
-        return ForecastList(forecast.city.name, forecast.city.country, convertForecastListToDomain(forecast.list))
+        return ForecastList(forecast.city.name, forecast.city.country,
+                convertForecastListToDomain(forecast.list))
     }
 
     private fun convertForecastListToDomain(list: List<Forecast>): List<ModelForecast> {
