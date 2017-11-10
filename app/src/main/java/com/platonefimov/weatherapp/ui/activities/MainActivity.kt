@@ -8,6 +8,7 @@ import com.platonefimov.weatherapp.R
 import com.platonefimov.weatherapp.domain.commands.RequestForecastCommand
 import com.platonefimov.weatherapp.ui.adapters.ForecastListAdapter
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val forecastList = findViewById<RecyclerView>(R.id.forecast_list)
+        val forecastList = find<RecyclerView>(R.id.forecastList)
         forecastList.layoutManager = LinearLayoutManager(this)
 
         doAsync {
