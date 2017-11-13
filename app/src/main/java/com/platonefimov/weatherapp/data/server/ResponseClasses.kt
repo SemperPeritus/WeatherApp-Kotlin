@@ -1,4 +1,4 @@
-package com.platonefimov.weatherapp.data
+package com.platonefimov.weatherapp.data.server
 
 data class ForecastResult(val city: City, val list: List<Forecast>)
 
