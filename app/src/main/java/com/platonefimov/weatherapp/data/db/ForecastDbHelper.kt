@@ -11,7 +11,7 @@ class ForecastDbHelper(context: Context = App.instance) : ManagedSQLiteOpenHelpe
     companion object {
         val DB_NAME = "forecast.db"
         val DB_VERSION = 1
-        val instance by lazy { ForecastDbHelper }
+        val instance by lazy { ForecastDbHelper() }
     }
 
     override fun onCreate(db: SQLiteDatabase) {
