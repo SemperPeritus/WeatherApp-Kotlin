@@ -1,13 +1,15 @@
 package com.platonefimov.weatherapp.domain.commands
 
-import com.platonefimov.weatherapp.data.server.ForecastRequest
-import com.platonefimov.weatherapp.domain.mappers.ForecastDataMapper
+import com.platonefimov.weatherapp.domain.datasource.ForecastProvider
 import com.platonefimov.weatherapp.domain.model.ForecastList
 
-class RequestForecastCommand(private val zipCode: Long) : Command<ForecastList> {
+class RequestForecastCommand(private val zipCode: Long,
+                             private val forecastProvider: ForecastProvider = ForecastProvider()) :
+        Command<ForecastList> {
 
-    override fun execute(): ForecastList {
-        val forecastRequest = ForecastRequest(zipCode)
-        return ForecastDataMapper().convertFromDataModel(zipCode, forecastRequest.execute())
+    companion object {
+        val DAYS = 7
     }
+
+    override fun execute(): ForecastList = forecastProvider.requestByZipCode(zipCode, DAYS)
 }

@@ -1,15 +1,13 @@
-package com.platonefimov.weatherapp.domain.mappers
+package com.platonefimov.weatherapp.data.server
 
-import com.platonefimov.weatherapp.data.server.Forecast
-import com.platonefimov.weatherapp.data.server.ForecastResult
 import com.platonefimov.weatherapp.domain.model.ForecastList
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.platonefimov.weatherapp.domain.model.Forecast as ModelForecast
 
-class ForecastDataMapper {
+class ServerDataMapper {
 
-    fun convertFromDataModel(zipCode: Long, forecast: ForecastResult) = with(forecast) {
+    fun convertToDomain(zipCode: Long, forecast: ForecastResult) = with(forecast) {
         ForecastList(zipCode, city.name, city.country, convertForecastListToDomain(list))
     }
 
