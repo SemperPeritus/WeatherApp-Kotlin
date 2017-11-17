@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import com.platonefimov.weatherapp.ui.App
 import org.jetbrains.anko.db.*
 
-class ForecastDbHelper(context: Context = App.instance) : ManagedSQLiteOpenHelper(context,
+class ForecastDbHelper(ctx: Context = App.instance) : ManagedSQLiteOpenHelper(ctx,
         ForecastDbHelper.DB_NAME, null, ForecastDbHelper.DB_VERSION) {
 
     companion object {

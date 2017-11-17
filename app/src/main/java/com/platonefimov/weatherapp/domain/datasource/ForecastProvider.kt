@@ -1,8 +1,8 @@
 package com.platonefimov.weatherapp.domain.datasource
 
-import android.util.Log
 import com.platonefimov.weatherapp.data.db.ForecastDb
 import com.platonefimov.weatherapp.data.server.ForecastServer
+import com.platonefimov.weatherapp.domain.model.Forecast
 import com.platonefimov.weatherapp.domain.model.ForecastList
 import com.platonefimov.weatherapp.extensions.firstResult
 
@@ -13,15 +13,17 @@ class ForecastProvider(private val sources: List<ForecastDataSource> = ForecastP
         val SOURCES = listOf(ForecastDb(), ForecastServer())
     }
 
-    fun requestByZipCode(zipCode: Long, days: Int): ForecastList =
-            sources.firstResult { requestSource(it, days, zipCode) }
+    fun requestByZipCode(zipCode: Long, days: Int): ForecastList = requestToSources {
+        val result = it.requestForecastByZipCode(zipCode, todayTimeSpan())
+        if (result != null && result.size >= days) result else null
+    }
 
-    private fun requestSource(source: ForecastDataSource, days: Int, zipCode: Long): ForecastList? {
-        val result = source.requestForecastByZipCode(zipCode, todayTimeSpan())
-        Log.v(this.javaClass.name, if (result != null) result::class.simpleName +
-                result.size.toString() else "Null")
-        return if (result != null && result.size >= days) result else null
+    fun requestForecast(id: Long): Forecast = requestToSources {
+        it.requestDayForecast(id)
     }
 
     private fun todayTimeSpan() = System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS
+
+    private fun <T : Any> requestToSources(f: (ForecastDataSource) -> T?): T =
+            sources.firstResult { f(it) }
 }

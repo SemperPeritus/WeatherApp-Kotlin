@@ -9,7 +9,7 @@ import com.platonefimov.weatherapp.domain.commands.RequestForecastCommand
 import com.platonefimov.weatherapp.ui.adapters.ForecastListAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
@@ -25,9 +25,11 @@ class MainActivity : AppCompatActivity() {
             val result = RequestForecastCommand(634045).execute()
             uiThread {
                 val adapter = ForecastListAdapter(result) {
-                    toast(it.description)
+                    startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                            DetailActivity.CITY_NAME to result.city)
                 }
                 forecastList.adapter = adapter
+                title = "${result.city} (${result.country})"
             }
         }
     }

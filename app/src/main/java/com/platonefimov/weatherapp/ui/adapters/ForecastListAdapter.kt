@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.platonefimov.weatherapp.R
 import com.platonefimov.weatherapp.domain.model.Forecast
 import com.platonefimov.weatherapp.domain.model.ForecastList
+import com.platonefimov.weatherapp.extensions.ctx
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_forecast.view.*
 import java.text.DateFormat
@@ -17,7 +18,7 @@ class ForecastListAdapter(private val weekForecast: ForecastList,
         RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
+        val view = LayoutInflater.from(parent.ctx).inflate(
                 R.layout.item_forecast, parent, false)
 
         return ViewHolder(view, itemClick)
@@ -36,7 +37,7 @@ class ForecastListAdapter(private val weekForecast: ForecastList,
 
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
-                Picasso.with(itemView.context).load(iconUrl).into(itemView.icon)
+                Picasso.with(itemView.ctx).load(iconUrl).into(itemView.icon)
                 itemView.date.text = convertDate(date)
                 itemView.description.text = description
                 itemView.maxTemperature.text = "$high"

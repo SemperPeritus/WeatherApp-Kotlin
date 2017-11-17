@@ -2,6 +2,7 @@ package com.platonefimov.weatherapp.data.server
 
 import com.platonefimov.weatherapp.data.db.ForecastDb
 import com.platonefimov.weatherapp.domain.datasource.ForecastDataSource
+import com.platonefimov.weatherapp.domain.model.Forecast
 import com.platonefimov.weatherapp.domain.model.ForecastList
 
 class ForecastServer(private val dataMapper: ServerDataMapper = ServerDataMapper(),
@@ -16,4 +17,6 @@ class ForecastServer(private val dataMapper: ServerDataMapper = ServerDataMapper
         } else
             null
     }
+
+    override fun requestDayForecast(id: Long): Forecast? = throw UnsupportedOperationException()
 }
