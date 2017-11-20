@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import com.platonefimov.weatherapp.R
 import com.platonefimov.weatherapp.domain.commands.RequestForecastCommand
 import com.platonefimov.weatherapp.ui.adapters.ForecastListAdapter
+import com.platonefimov.weatherapp.ui.utils.DelegatesExt
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
 
     override val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
+    var zipCode: Long by DelegatesExt.preference(this, SettingsActivity.ZIP_CODE,
+            SettingsActivity.DEFAULT_ZIP)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,17 +28,22 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
 
         forecastList.layoutManager = LinearLayoutManager(this)
         attachToScroll(forecastList)
+    }
 
-        doAsync {
-            val result = RequestForecastCommand(634045).execute()
-            uiThread {
-                val adapter = ForecastListAdapter(result) {
-                    startActivity<DetailActivity>(DetailActivity.ID to it.id,
-                            DetailActivity.CITY_NAME to result.city)
-                }
-                forecastList.adapter = adapter
-                toolbarTitle = "${result.city} (${result.country})"
+    override fun onResume() {
+        super.onResume()
+        loadForecast()
+    }
+
+    private fun loadForecast() = doAsync {
+        val result = RequestForecastCommand(zipCode).execute()
+        uiThread {
+            val adapter = ForecastListAdapter(result) {
+                startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                        DetailActivity.CITY_NAME to result.city)
             }
+            forecastList.adapter = adapter
+            toolbarTitle = "${result.city} (${result.country})"
         }
     }
 }

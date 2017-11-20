@@ -7,8 +7,7 @@ import com.platonefimov.weatherapp.R
 import com.platonefimov.weatherapp.extensions.ctx
 import com.platonefimov.weatherapp.extensions.slideEnter
 import com.platonefimov.weatherapp.extensions.slideExit
-import com.platonefimov.weatherapp.ui.App
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.startActivity
 
 interface ToolbarManager {
 
@@ -24,7 +23,7 @@ interface ToolbarManager {
         toolbar.inflateMenu(R.menu.menu_main)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_settings -> App.instance.toast("Settings")
+                R.id.action_settings -> toolbar.ctx.startActivity<SettingsActivity>()
             }
             true
         }
