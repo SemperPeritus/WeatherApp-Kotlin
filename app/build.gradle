@@ -6,7 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    //noinspection GradleDependency
+    buildToolsVersion "$support_version"
     defaultConfig {
         applicationId "com.platonefimov.weatherapp"
         minSdkVersion 15
@@ -29,13 +30,23 @@ dependencies {
     implementation "org.jetbrains.anko:anko-common:$anko_version"
     implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
-    implementation 'com.android.support:appcompat-v7:27.0.1'
-    implementation 'com.android.support:recyclerview-v7:27.0.1'
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.12.0'
+    testImplementation 'org.mockito:mockito-inline:2.12.0'
+    androidTestImplementation "com.android.support:support-annotations:$support_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.1') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
