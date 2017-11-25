@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.asReference
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.find
